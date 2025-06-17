@@ -1,0 +1,26 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "axios": "^0.21",
+        "browserify-zlib": "^0.2.0",
+        "buffer": "^6.0.3",
+        "crypto-browserify": "^3.12.1",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "os-browserify": "^0.3.0",
+        "path-browserify": "^1.0.1",
+        "postcss": "^8.1.14",
+        "stream-browserify": "^3.0.0",
+        "util": "^0.12.5",
+        "vm-browserify": "^1.1.2"
+    }
+}

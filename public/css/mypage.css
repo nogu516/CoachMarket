@@ -1,0 +1,91 @@
+.mypage-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+}
+
+.profile-image {
+    width: 80px;
+    height: 80px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-info h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.edit-button {
+    padding: 6px 14px;
+    border: 1px solid #ff5c5c;
+    color: #ff5c5c;
+    background-color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+}
+
+.tab-menu {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    font-size: 14px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    color: #333;
+}
+
+.tab.active {
+    color: red;
+    border-color: red;
+    font-weight: bold;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product-item {
+    width: calc(20% - 16px);
+    text-align: center;
+}
+
+.product-image {
+    width: 100%;
+    padding-top: 100%;
+    background-color: #ccc;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.product-name {
+    font-size: 14px;
+    color: #333;
+}
