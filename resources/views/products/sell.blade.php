@@ -39,13 +39,27 @@
         {{-- 商品の詳細 --}}
         <div class="form-section">
             <h2>商品の詳細</h2>
+            <input type="hidden" name="category" id="selected-category" value="">
 
             <label>カテゴリー</label>
             <div class="category-tags">
                 @foreach (['ファッション', '家電', 'インテリア', 'レディース', 'メンズ', 'コスメ', 'ゲーム', 'スポーツ', 'キャラクター', 'ハンドメイド', 'アクセサリー', 'おもちゃ', 'ベビー・キッズ'] as $category)
-                <span class="category-tag">{{ $category }}</span>
+                <span class="category-tag" data-value="{{ $category }}">{{ $category }}</span>
                 @endforeach
             </div>
+
+            <script>
+                const tags = document.querySelectorAll('.category-tag');
+                const hiddenInput = document.getElementById('selected-category');
+
+                tags.forEach(tag => {
+                    tag.addEventListener('click', () => {
+                        tags.forEach(t => t.classList.remove('selected')); // 全タグの選択を解除
+                        tag.classList.add('selected'); // 選択されたタグだけハイライト
+                        hiddenInput.value = tag.dataset.value; // hidden input に値をセット
+                    });
+                });
+            </script>
 
             <div class="form-group">
                 <label for="condition">商品の状態</label>

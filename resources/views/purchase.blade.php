@@ -11,10 +11,10 @@
     <div class="purchase-content">
         <div class="left-column">
             <div class="product-box">
-                <img src="{{ $item->image_url ?? '/images/default.png' }}" alt="商品画像" class="product-image">
+                <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('/images/default.png') }}" alt="商品画像" class="product-image">
                 <div class="product-info">
-                    <h2>{{ $item->name }}</h2>
-                    <p class="price">¥{{ number_format($item->price) }}</p>
+                    <h2>{{ $product->name }}</h2>
+                    <p class="price">¥{{ number_format($product->price) }}</p>
                 </div>
             </div>
 
@@ -45,7 +45,7 @@
             <div class="summary-box">
                 <div class="summary-row">
                     <span>商品代金</span>
-                    <span>¥{{ number_format($item->price) }}</span>
+                    <span>¥{{ number_format($product->price) }}</span>
                 </div>
                 <div class="summary-row">
                     <span>支払い方法</span>
@@ -55,6 +55,7 @@
 
             <form action="{{ route('purchase.complete') }}" method="POST">
                 @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <button type="submit" class="purchase-button">購入する</button>
             </form>
         </div>

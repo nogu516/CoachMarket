@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Models\Category;
 
 class ItemController extends Controller
 {
@@ -26,6 +27,7 @@ class ItemController extends Controller
 
     public function create()
     {
-        return view('items.create');
+        $categories = Category::all(); // 全カテゴリを取得
+        return view('items.create', compact('categories'));
     }
 }
