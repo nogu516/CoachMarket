@@ -20,6 +20,7 @@ class CreateCommentsTable extends Migration
             $table->text('comment');
             $table->text('content');
             $table->timestamps();
+            $table->unsignedBigInteger('product_id')->nullable()->after('id');
         });
     }
 

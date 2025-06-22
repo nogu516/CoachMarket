@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -46,8 +47,6 @@ Route::post('/purchase/complete', [PurchaseController::class, 'complete'])->name
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 
     Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
@@ -64,8 +63,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/setup', [ProfileController::class, 'storeSetup'])->name('profile.store');
 });
 
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/recommended', [ProductController::class, 'recommended'])->name('products.recommended');
 Route::get('/products/favorites', [ProductController::class, 'favorites'])->name('products.favorites');
+Route::post('/products/{product}/purchase', [ProductController::class, 'purchase'])->name('products.purchase');
+
 
 // ログインフォーム表示
 Route::get('/login', function () {
@@ -88,3 +90,6 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comments.st
 
 Route::get('/address/edit', [AddressController::class, 'edit'])->name('address.edit');
 Route::put('/address/update', [AddressController::class, 'update'])->name('address.update');
+
+// web.php
+Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');

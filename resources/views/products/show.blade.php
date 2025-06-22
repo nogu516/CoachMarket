@@ -31,7 +31,17 @@
 
             <div class="details">
                 <h2>商品の情報</h2>
-                <p>カテゴリー：<span class="tag">{{ optional($product->category)->name ?? '未設定' }}</span></p>
+                <p>
+                    カテゴリー：
+                    @if ($product->category)
+                    <a href="{{ route('category.show', $product->category->id) }}" class="tag">
+                        {{ $product->category->name }}
+                    </a>
+                    @else
+                    <span class="tag">{{ optional($product->category)->name ?? '未設定' }}</span>
+                    @endif
+                </p>
+
                 <p>商品の状態：{{ $product->condition }}</p>
             </div>
 

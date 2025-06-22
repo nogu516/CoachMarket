@@ -17,9 +17,24 @@
     gap: 40px;
 }
 
+.image-box {
+    width: 100%;
+    max-width: 300px;
+    /* 任意の最大幅に調整 */
+    height: 300px;
+    /* 高さを固定する場合は指定 */
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+}
+
 .image-box img {
-    width: 320px;
-    height: 320px;
+    width: 100% !important;
+        height: 100% !important;
     background-color: #f3f3f3;
     object-fit: cover;
     border: 1px solid #ddd;

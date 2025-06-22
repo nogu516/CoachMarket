@@ -13,8 +13,10 @@ class RenameItemIdToProductIdInCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('product_id_in_comments', function (Blueprint $table) {
-            $table->renameColumn('item_id', 'product_id');
+        Schema::table('comments', function (Blueprint $table) {
+            if (Schema::hasColumn('comments', 'item_id')) {
+                $table->renameColumn('item_id', 'product_id');
+            }
         });
     }
 

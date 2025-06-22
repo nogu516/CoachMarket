@@ -30,4 +30,5 @@ class ItemController extends Controller
         $categories = Category::all(); // 全カテゴリを取得
         return view('items.create', compact('categories'));
     }
+
 }

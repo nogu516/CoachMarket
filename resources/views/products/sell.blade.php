@@ -16,12 +16,10 @@
             <label>商品画像</label>
             <div class="image-upload-box">
                 <input type="file" name="image" id="image" hidden>
-                <label for="image" class="image-label">画像を選択する</label>
-            </div>
-
-            {{-- プレビュー表示用 --}}
-            <div class="preview">
-                <img id="imagePreview" src="#" alt="プレビュー画像" style="display: none; max-width: 300px; margin-top: 10px;">
+                <label for="image" class="image-label" id="imageLabel">画像を選択する</label>
+                <div class="preview">
+                    <img id="imagePreview" src="#" alt="プレビュー画像" style="display: none; max-width: 300px; margin-top: 10px;">
+                </div>
             </div>
         </div>
 
@@ -39,65 +37,106 @@
         {{-- 商品の詳細 --}}
         <div class="form-section">
             <h2>商品の詳細</h2>
-            <input type="hidden" name="category" id="selected-category" value="">
 
             <label>カテゴリー</label>
+
+            {{-- カテゴリータグ一覧 --}}
             <div class="category-tags">
-                @foreach (['ファッション', '家電', 'インテリア', 'レディース', 'メンズ', 'コスメ', 'ゲーム', 'スポーツ', 'キャラクター', 'ハンドメイド', 'アクセサリー', 'おもちゃ', 'ベビー・キッズ'] as $category)
-                <span class="category-tag" data-value="{{ $category }}">{{ $category }}</span>
+                @foreach ($categories as $category)
+                <span class="category-tag" data-id="{{ $category->id }}">{{ $category->name }}</span>
                 @endforeach
             </div>
 
-            <script>
+            {{-- 1つだけの hidden input（← foreach の外） --}}
+            <input type="hidden" name="category_id" id="selected-category" value="">
+        </div>
+
+        <script>
+            const tags = document.querySelectorAll('.category-tag');
+            const hiddenInput = document.getElementById('selected-category');
+
+            tags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    tags.forEach(t => t.classList.remove('selected')); // 全タグの選択を解除
+                    tag.classList.add('selected'); // 選択されたタグだけハイライト
+                    hiddenInput.value = tag.dataset.id; // hidden input に値をセット
+                });
+            });
+            document.addEventListener('DOMContentLoaded', function() {
                 const tags = document.querySelectorAll('.category-tag');
                 const hiddenInput = document.getElementById('selected-category');
 
                 tags.forEach(tag => {
                     tag.addEventListener('click', () => {
-                        tags.forEach(t => t.classList.remove('selected')); // 全タグの選択を解除
-                        tag.classList.add('selected'); // 選択されたタグだけハイライト
-                        hiddenInput.value = tag.dataset.value; // hidden input に値をセット
+                        // 全タグから選択スタイル削除
+                        tags.forEach(t => t.classList.remove('selected'));
+                        // 今クリックされたタグだけ選択状態に
+                        tag.classList.add('selected');
+                        // data-id を hidden input にセット
+                        hiddenInput.value = tag.dataset.id;
+                        console.log('選択したカテゴリーID:', hiddenInput.value); // デバッグ用
                     });
                 });
-            </script>
+            });
 
-            <div class="form-group">
-                <label for="condition">商品の状態</label>
-                <select name="condition" id="condition">
-                    <option value="">選択してください</option>
-                    <option value="new">良好</option>
-                    <option value="like_new">目立った傷や汚れなし</option>
-                    <option value="used">やや傷や汚れあり</option>
-                    <option value="used">状態が悪い</option>
-                </select>
-            </div>
+            // 画像プレビュー処理（そのままでOK）
+            document.getElementById('image').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                const preview = document.getElementById('imagePreview');
 
-            <div class="form-group">
-                <label for="name">商品名</label>
-                <input type="text" name="name" id="name">
-            </div>
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        document.getElementById('imageLabel').style.display = 'none';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '#';
+                    preview.style.display = 'none';
+                }
+            });
+        </script>
+        </script>
 
-            <div class="form-group">
-                <label for="brand">ブランド名</label>
-                <input type="text" name="brand" id="brand">
-            </div>
-
-            <div class="form-group">
-                <label for="description">商品の説明</label>
-                <textarea name="description" id="description" rows="4"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="price">販売価格</label>
-                <input type="text" name="price" id="price" placeholder="¥">
-            </div>
-        </div>
-
-        {{-- 出品ボタン --}}
         <div class="form-group">
-            <button type="submit" class="submit-button">出品する</button>
+            <label for="condition">商品の状態</label>
+            <select name="condition" id="condition">
+                <option value="">選択してください</option>
+                <option value="new">良好</option>
+                <option value="like_new">目立った傷や汚れなし</option>
+                <option value="used">やや傷や汚れあり</option>
+                <option value="used">状態が悪い</option>
+            </select>
         </div>
-    </form>
+
+        <div class="form-group">
+            <label for="name">商品名</label>
+            <input type="text" name="name" id="name">
+        </div>
+
+        <div class="form-group">
+            <label for="brand">ブランド名</label>
+            <input type="text" name="brand" id="brand">
+        </div>
+
+        <div class="form-group">
+            <label for="description">商品の説明</label>
+            <textarea name="description" id="description" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="price">販売価格</label>
+            <input type="text" name="price" id="price" placeholder="¥">
+        </div>
+</div>
+
+{{-- 出品ボタン --}}
+<div class="form-group">
+    <button type="submit" class="submit-button">出品する</button>
+</div>
+</form>
 </div>
 @endsection
 

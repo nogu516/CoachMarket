@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    public function item()
+    public function product()
     {
-        return $this->belongsTo(product::class);
+        return $this->belongsTo(product::class, 'product_id');
     }
 }
