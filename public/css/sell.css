@@ -71,13 +71,35 @@ h2 {
 }
 
 .category-tags {
+    display: inline-block;
+        background-color: #fff;
+        border: 1px solid #ff5c5c;
+        color: #ff5c5c;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+}
+
+.category-tags:hover {
+    background-color: #ffeaea;
+}
+
+.category-tags.selected {
+    background-color: #ff5c5c;
+    color: white;
+    border-color: #ff5c5c;
+}
+
+.category-tags {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.category-tag {
+.category-tags {
     background-color: #fff;
     border: 1px solid #ff5c5c;
     color: #ff5c5c;

@@ -46,4 +46,9 @@ class Product extends Model
         'category_id',
         'image',
     ];
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }

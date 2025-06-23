@@ -17,7 +17,18 @@
             <p class="price">¥{{ number_format($product->price) }} <span>（税込）</span></p>
 
             <div class="icons">
-                <span>☆</span>
+                <form action="{{ route('products.like', $product->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="like-button">
+                        @if ($product->likes->contains('user_id', auth()->id()))
+                        ★ いいねを取り消す
+                        @else
+                        ☆ いいねする
+                        @endif
+                    </button>
+                </form>
+
+                <p>{{ $product->likes->count() }}件のいいね</p>
                 <span>💬</span>
             </div>
 

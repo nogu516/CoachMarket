@@ -39,6 +39,7 @@
             <h2>商品の詳細</h2>
 
             <label>カテゴリー</label>
+            <p id="selected-category-name" style="margin-top:10px;"></p>
 
             {{-- カテゴリータグ一覧 --}}
             <div class="category-tags">
@@ -50,56 +51,6 @@
             {{-- 1つだけの hidden input（← foreach の外） --}}
             <input type="hidden" name="category_id" id="selected-category" value="">
         </div>
-
-        <script>
-            const tags = document.querySelectorAll('.category-tag');
-            const hiddenInput = document.getElementById('selected-category');
-
-            tags.forEach(tag => {
-                tag.addEventListener('click', () => {
-                    tags.forEach(t => t.classList.remove('selected')); // 全タグの選択を解除
-                    tag.classList.add('selected'); // 選択されたタグだけハイライト
-                    hiddenInput.value = tag.dataset.id; // hidden input に値をセット
-                });
-            });
-            document.addEventListener('DOMContentLoaded', function() {
-                const tags = document.querySelectorAll('.category-tag');
-                const hiddenInput = document.getElementById('selected-category');
-
-                tags.forEach(tag => {
-                    tag.addEventListener('click', () => {
-                        // 全タグから選択スタイル削除
-                        tags.forEach(t => t.classList.remove('selected'));
-                        // 今クリックされたタグだけ選択状態に
-                        tag.classList.add('selected');
-                        // data-id を hidden input にセット
-                        hiddenInput.value = tag.dataset.id;
-                        console.log('選択したカテゴリーID:', hiddenInput.value); // デバッグ用
-                    });
-                });
-            });
-
-            // 画像プレビュー処理（そのままでOK）
-            document.getElementById('image').addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                const preview = document.getElementById('imagePreview');
-
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.style.display = 'block';
-                        document.getElementById('imageLabel').style.display = 'none';
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    preview.src = '#';
-                    preview.style.display = 'none';
-                }
-            });
-        </script>
-        </script>
-
         <div class="form-group">
             <label for="condition">商品の状態</label>
             <select name="condition" id="condition">
@@ -142,6 +93,52 @@
 
 @section('scripts')
 <script>
+    const tags = document.querySelectorAll('.category-tag');
+    const hiddenInput = document.getElementById('selected-category');
+
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            tags.forEach(t => t.classList.remove('selected')); // 全タグの選択を解除
+            tag.classList.add('selected'); // 選択されたタグだけハイライト
+            hiddenInput.value = tag.dataset.id; // hidden input に値をセット
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const tags = document.querySelectorAll('.category-tag');
+        const hiddenInput = document.getElementById('selected-category');
+
+        tags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                // 全タグから選択スタイル削除
+                tags.forEach(t => t.classList.remove('selected'));
+                // 今クリックされたタグだけ選択状態に
+                tag.classList.add('selected');
+                // data-id を hidden input にセット
+                hiddenInput.value = tag.dataset.id;
+                console.log('選択したカテゴリーID:', hiddenInput.value); // デバッグ用
+            });
+        });
+    });
+
+    // 画像プレビュー処理（そのままでOK）
+    document.getElementById('image').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('imagePreview');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                document.getElementById('imageLabel').style.display = 'none';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+        }
+    });
+
     document.getElementById('image').addEventListener('change', function(event) {
         const file = event.target.files[0];
         const preview = document.getElementById('imagePreview');
@@ -157,6 +154,17 @@
             preview.src = '#';
             preview.style.display = 'none';
         }
+    });
+
+    const categoryNameDisplay = document.getElementById('selected-category-name');
+
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            tags.forEach(t => t.classList.remove('selected'));
+            tag.classList.add('selected');
+            hiddenInput.value = tag.dataset.id;
+            categoryNameDisplay.innerHTML = `<span class="tag">${tag.textContent}</span>`;
+        });
     });
 </script>
 @endsection

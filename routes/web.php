@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -61,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile/setup', [ProfileController::class, 'showSetupForm'])->name('profile.setup');
     Route::post('/profile/setup', [ProfileController::class, 'storeSetup'])->name('profile.store');
+
+    Route::post('/products/{product}/like', [LikeController::class, 'toggle'])->name('products.like');
 });
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
