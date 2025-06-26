@@ -35,7 +35,6 @@
                     <a href="{{ route('address.edit') }}">変更する</a>
                 </div>
                 <div class="address-detail">
-                    <p>{{ $user->name }}</p>
                     <p>{{ $user->address }}</p>
                 </div>
             </div>
@@ -49,7 +48,7 @@
                 </div>
                 <div class="summary-row">
                     <span>支払い方法</span>
-                    <span>コンビニ払い</span>
+                    <span id="selected-payment">コンビニ払い</span>
                 </div>
             </div>
 
@@ -61,4 +60,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const select = document.getElementById('payment'); // ← 修正箇所！IDは「payment」
+        const display = document.getElementById('selected-payment');
+
+        // 表示用テキスト対応表
+        const paymentLabels = {
+            credit: 'クレジットカード',
+            convenience: 'コンビニ払い'
+        };
+
+        function updateDisplay() {
+            const value = select.value;
+            if (paymentLabels[value]) {
+                display.textContent = paymentLabels[value];
+            } else {
+                display.textContent = '未選択';
+            }
+        }
+
+        select.addEventListener('change', updateDisplay);
+        updateDisplay(); // 初期表示
+    });
+</script>
+
 @endsection

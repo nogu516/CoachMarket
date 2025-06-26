@@ -10,21 +10,20 @@
 
     <form action="{{ route('address.update') }}" method="POST">
         @csrf
-        @method('PUT')
 
         <div class="form-group">
-            <label for="postal_code">郵便番号</label>
-            <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code', $address->postal_code ?? '') }}">
+            <label for="postcode">郵便番号</label>
+            <input type="text" name="postcode" id="postcode" value="{{ old('postcode', $user->postcode ?? '') }}">
         </div>
 
         <div class="form-group">
             <label for="address">住所</label>
-            <input type="text" name="address" id="address" value="{{ old('address', $address->address ?? '') }}">
+            <input type="text" name="address" id="address" value="{{ old('address', $user->address ?? '') }}">
         </div>
 
         <div class="form-group">
             <label for="building">建物名</label>
-            <input type="text" name="building" id="building" value="{{ old('building', $address->building ?? '') }}">
+            <input type="text" name="building" id="building" value="{{ old('building', $user->building ?? '') }}">
         </div>
 
         <div class="form-group">

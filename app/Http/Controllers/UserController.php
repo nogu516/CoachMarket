@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Models\Purchase;
 
 class UserController extends Controller
 {
@@ -25,5 +26,20 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         return view('users.show', compact('user'));
+    }
+
+    public function index()
+    {
+        $user = Auth::user();
+
+        // 出品商品
+        $listedProducts = Product::where('user_id', $user->id)->get();
+
+        // 購入商品（Purchase モデルと Product モデルがリレーションしている場合）
+        $purchasedProducts = Product::whereHas('purchases', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+
+        return view('mypage', compact('listedProducts', 'purchasedProducts'));
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Profile;
 
 class ProfileController extends Controller
@@ -38,33 +40,61 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
+        $user->name = $request->name;
 
         // バリデーション
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => 'required|email|max:255',
+            //'email' => 'required|email|max:255',
             'bio' => 'nullable|string|max:500',
-            'avatar' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // ユーザー情報の更新
-        //$user->name = $validated['name'.'postcode'.'address'. 'building'];
-        //$user->save();
+        $user->name = $request->name;
+        //$user->email = $request->email;
+        $user->bio = $request->bio;
 
-        // プロフィール情報の更新
-        //$user->profile()->updateOrCreate(
-        //['user_id' => $user->id],['bio' => $validated['bio'] ?? null]);
+        // 画像がある場合は保存
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('public/profile_images');
+            $user->profile_image = basename($path); // ファイル名だけ保存
+        }
 
-        // アイコン画像の保存
-        //if ($request->hasFile('avatar')) {
-        //$path = $request->file('avatar')->store('avatars', 'public');
-        //$user->profile()->update(['avatar' => $path]);
+        $user->postcode = $request->postcode;
+        $user->address = $request->address;
+        $user->building = $request->building;
 
-        return redirect()->route('profile.edit')->with('message', 'プロフィールを更新しました');
+        $user->save();
+
+        return redirect()->route('profile.edit')->with('success', 'プロフィールを更新しました');
     }
 
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function editAddress()
+    {
+        $user = Auth::user();
+        return view('address_edit', compact('user'));
+    }
+
+    public function updateAddress(Request $request)
+    {
+
+        $request->validate([
+            'postcode' => 'required|string|max:10',
+            'address' => 'required|string|max:255',
+            'building' => 'nullable|string|max:255',
+        ]);
+
+        $user = Auth::user();
+        $user->postcode = $request->postcode;
+        $user->address = $request->address;
+        $user->building = $request->building;
+        $user->save();
+
+        return redirect()->route('profile.edit')->with('success', '住所を更新しました');
     }
 }

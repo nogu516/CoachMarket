@@ -58,7 +58,7 @@ Route::middleware(['auth'])->group(function () {
         return view('sell'); // 出品ページ
     })->name('sell');
 
-    Route::get('/mypage', [UserController::class, 'mypage'])->name('mypage');
+    Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
 
     Route::get('/profile/setup', [ProfileController::class, 'showSetupForm'])->name('profile.setup');
     Route::post('/profile/setup', [ProfileController::class, 'storeSetup'])->name('profile.store');
@@ -91,8 +91,7 @@ Route::post('/logout', function (Request $request) {
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
-Route::get('/address/edit', [AddressController::class, 'edit'])->name('address.edit');
-Route::put('/address/update', [AddressController::class, 'update'])->name('address.update');
+Route::get('/address/edit', [ProfileController::class, 'editAddress'])->name('address.edit');
+Route::post('/address/update', [ProfileController::class, 'updateAddress'])->name('address.update');
 
-// web.php
 Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');

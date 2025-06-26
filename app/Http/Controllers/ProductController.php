@@ -14,9 +14,21 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+
+        // ログインユーザーがいるか確認
+        if ($user) {
+            $mylistProducts = $user->likes()->with('product')->get()->pluck('product');
+        } else {
+            $mylistProducts = collect(); // 空のコレクションを返す
+        }
+
         $products = Product::with(['user', 'purchases'])->latest()->paginate(12);
-        return view('products.index', compact('products'));
+        $recommendedProducts = Product::where('is_recommended', true)->get();
+
+        return view('products.index', compact('products', 'recommendedProducts', 'mylistProducts'));
     }
+
 
     /**
      * 商品詳細画面を表示
@@ -70,9 +82,16 @@ class ProductController extends Controller
 
     public function mypage()
     {
-        // ログインユーザーが出品した商品を取得（例）
-        $products = Product::where('user_id', auth()->id())->get();
-        return view('mypage', compact('products'));
+        $user = auth()->user();
+
+        $listedProducts = \App\Models\Product::where('user_id', $user->id)->get();
+        $purchasedProducts = $user->purchases()->with('product')->get()->pluck('product');
+
+        return view('mypage', [
+            'products' => $listedProducts, // 任意：共通変数名としても使える
+            'listedProducts' => $listedProducts,
+            'purchasedProducts' => $purchasedProducts,
+        ]);
     }
 
     public function recommended()
