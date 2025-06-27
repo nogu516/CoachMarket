@@ -47,6 +47,11 @@ class Product extends Model
         'image',
     ];
 
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+    }
+
     public function likes()
     {
         return $this->hasMany(Like::class);

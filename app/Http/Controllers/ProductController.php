@@ -15,10 +15,11 @@ class ProductController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $products = Product::latest()->get();
 
         // ログインユーザーがいるか確認
         if ($user) {
-            $mylistProducts = $user->likes()->with('product')->get()->pluck('product');
+            $mylistProducts = $user->likedProducts()->get();
         } else {
             $mylistProducts = collect(); // 空のコレクションを返す
         }
@@ -26,7 +27,13 @@ class ProductController extends Controller
         $products = Product::with(['user', 'purchases'])->latest()->paginate(12);
         $recommendedProducts = Product::where('is_recommended', true)->get();
 
-        return view('products.index', compact('products', 'recommendedProducts', 'mylistProducts'));
+        $products = Product::latest()->get();
+
+        $likedProductIds = auth()->check()
+            ? auth()->user()->likedProducts->pluck('id')->toArray()
+            : [];
+
+        return view('products.index', compact('products', 'recommendedProducts', 'mylistProducts' , 'likedProductIds'));
     }
 
 

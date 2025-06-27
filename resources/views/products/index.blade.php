@@ -10,7 +10,10 @@
 <div class="product-page">
     <div class="tab-menu" role="tablist">
         <button class="tab active" data-tab="recommend" tabindex="0">おすすめ</button>
+        @if ($mylistProducts->isNotEmpty())
         <button class="tab" data-tab="mylist" tabindex="0">マイリスト</button>
+        @endif
+
     </div>
 </div>
 

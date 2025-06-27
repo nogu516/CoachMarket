@@ -20,7 +20,7 @@
                 <form action="{{ route('products.like', $product->id) }}" method="POST" style="display:inline;">
                     @csrf
                     <button type="submit" class="like-button">
-                        @if ($product->likes->contains('user_id', auth()->id()))
+                        @if (auth()->check() && auth()->user()->likedProducts->contains($product->id))
                         ★ いいねを取り消す
                         @else
                         ☆ いいねする
@@ -28,7 +28,7 @@
                     </button>
                 </form>
 
-                <p>{{ $product->likes->count() }}件のいいね</p>
+                <p>{{ optional($product->likes)->count() ?? 0 }}件のいいね</p>
                 <span>💬</span>
             </div>
 

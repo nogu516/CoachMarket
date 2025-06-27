@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Product;
 
 class User extends Authenticatable
 {
@@ -61,6 +62,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Purchase::class);
     }
+
+    public function likedProducts()
+    {
+        return $this->belongsToMany(Product::class, 'likes')->withTimestamps();
+    }
+
 
     //public function profile(){return $this->hasOne(Profile::class);}
 }

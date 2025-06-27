@@ -9,20 +9,18 @@ use Illuminate\Http\Request;
 class LikeController extends Controller
 {
 
-    public function toggle(Product $product)
+    public function toggleLike($id)
     {
-        $user = auth()->user();
+        $product = Product::findOrFail($id);
+        $user = Auth::user();
 
-        $like = $product->likes()->where('user_id', $user->id)->first();
-
-        if ($like) {
-            $like->delete();
+        if ($user->likedProducts()->where('product_id', $id)->exists()) {
+            // すでにいいねしてたら外す
+            $user->likedProducts()->detach($id);
         } else {
-            $product->likes()->create([
-                'user_id' => $user->id
-            ]);
+            // いいね追加
+            $user->likedProducts()->attach($id);
         }
-
         return back(); // or return response()->json() if using AJAX
     }
 }

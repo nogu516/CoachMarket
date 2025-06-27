@@ -52,6 +52,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
+    Route::post('/products/{id}/like', [LikeController::class, 'toggleLike'])->name('products.like');
+
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 
     Route::get('/sell', function () {
