@@ -14,7 +14,15 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::all();
-        return view('products.index', compact('items'));
+        // おすすめ商品（全商品やおすすめロジックによる）
+        $recommendedProducts = Product::latest()->take(10)->get();
+
+        // イイねした商品一覧
+        $mylistProducts = auth()->check()
+            ? auth()->user()->likedProducts()->get()
+            : collect();
+
+        return view('products.index', compact('items', 'recommendedProducts', 'mylistProducts'));
     }
 
     // 商品詳細用のshowメソッド

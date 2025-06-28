@@ -55,6 +55,15 @@
 
                 <p>商品の状態：{{ $product->condition }}</p>
             </div>
+            @auth
+            @if (Auth::id() === $product->user_id)
+            <form action="{{ route('products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('本当に削除しますか？');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">削除する</button>
+            </form>
+            @endif
+            @endauth
 
             <div class="comments">
                 <h2>コメント ({{ $product->comments->count() }})</h2>

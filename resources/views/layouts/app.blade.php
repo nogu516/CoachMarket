@@ -20,14 +20,20 @@
                     {{-- 上記はデザイン済みロゴの画像URLに置き換えてください --}}
                 </a>
             </div>
-
             <input type="text" class="search-box" placeholder="なにをお探しですか？">
-
             <div class="nav-links d-flex align-items-center">
+
+                @auth
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
-                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                @endauth
+
+                @guest
+                <a href="{{ route('login') }}">ログイン</a>
+                @endguest
+
                 <a href="{{ route('mypage') }}">マイページ</a>
                 <a href="{{ route('products.create') }}" class="btn btn-light">出品</a>
             </div>

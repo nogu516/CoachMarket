@@ -72,6 +72,7 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/recommended', [ProductController::class, 'recommended'])->name('products.recommended');
 Route::get('/products/favorites', [ProductController::class, 'favorites'])->name('products.favorites');
 Route::post('/products/{product}/purchase', [ProductController::class, 'purchase'])->name('products.purchase');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 
 // ログインフォーム表示

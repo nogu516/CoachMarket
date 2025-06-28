@@ -22,6 +22,14 @@
     text-decoration: none;
 }
 
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
 .tabs .tab {
     margin-right: 10px;
     text-decoration: none;
@@ -110,4 +118,48 @@
 
 .item-name {
     margin-top: 10px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+main.container {
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.item-card {
+    width: 200px;
+        max-width: 100%;
+        padding: 10px;
+}
+
+.fixed-image {
+    width: 200px !important;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.img-fluid {
+    width: auto !important;
+    max-width: 200px !important;
+    height: auto !important;
 }

@@ -124,4 +124,22 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', '購入が完了しました！');
     }
+
+    public function destroy(Product $product)
+    {
+        // ログインユーザーが出品者かどうかを確認
+        if (auth()->id() !== $product->user_id) {
+            abort(403, '削除権限がありません');
+        }
+
+        // 画像ファイルをストレージから削除（任意）
+        if ($product->image) {
+            \Storage::delete('public/' . $product->image);
+        }
+
+        // 商品削除
+        $product->delete();
+
+        return redirect()->route('mypage')->with('success', '商品を削除しました');
+    }
 }
