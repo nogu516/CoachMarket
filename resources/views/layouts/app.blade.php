@@ -16,11 +16,14 @@
         <div class="header-bar">
             <div class="logo">
                 <a href="{{ route('products.index') }}">
-                    <img src="{{ asset('images/coachtech-logo.svg') }}" style="height: 50px;">
+                    <img src="{{ asset('storage/images/coachtech-logo.svg') }}" alt="画像" style="height: 30px;">
                     {{-- 上記はデザイン済みロゴの画像URLに置き換えてください --}}
                 </a>
             </div>
-            <input type="text" class="search-box" placeholder="なにをお探しですか？">
+            <form action="{{ route('search') }}" method="GET">
+                <input type="text" name="keyword" class="search-box" placeholder="なにをお探しですか？" value="{{ request('keyword') }}">
+                <button type="submit">検索</button>
+            </form>
             <div class="nav-links d-flex align-items-center">
 
                 @auth

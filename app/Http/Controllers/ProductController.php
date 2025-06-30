@@ -142,4 +142,20 @@ class ProductController extends Controller
 
         return redirect()->route('mypage')->with('success', '商品を削除しました');
     }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        if (empty($keyword)) {
+            // キーワードがない場合は結果を空に
+            $products = collect(); // 空のコレクションを渡す
+        } else {
+            $products = Product::where('name', 'like', '%' . $keyword . '%')
+                ->orWhere('description', 'like', '%' . $keyword . '%')
+                ->get();
+        }
+
+        return view('products.search_results', ['products' => $products, 'keyword' => $keyword]);
+    }
 }

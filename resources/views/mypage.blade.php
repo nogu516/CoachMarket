@@ -8,7 +8,13 @@
 
 <div class="mypage-container">
     <div class="profile-header">
-        <div class="profile-image"></div>
+        <div class="profile-image">
+        @if(Auth::user()->profile_image)
+        <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="プロフィール画像" style="width: 80px; height: 80px; border-radius: 50%;">
+    @else
+        <img src="{{ asset('images/default-profile.png') }}" alt="デフォルト画像" style="width: 80px; height: 80px; border-radius: 50%;">
+    @endif
+        </div>
         @auth
         <p>{{ Auth::user()->name }}さん</p>
         @endauth
@@ -42,8 +48,10 @@
     <div class="product-list">
         @forelse ($purchasedProducts as $product)
         <div class="product-item">
+        <a href="{{ route('products.show', $product->id) }}" class="product-card">
             <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
             <h3 class="product-name">{{ $product->name }}</h3>
+            </a>
         </div>
         @empty
         <p>購入した商品はありません。</p>

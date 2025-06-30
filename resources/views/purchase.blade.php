@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('purchase.complete') }}" method="POST">
+            <form action="{{ route('purchase.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <button type="submit" class="purchase-button">購入する</button>

@@ -33,8 +33,8 @@ class ProfileController extends Controller
 
     public function edit()
     {
-        $user = auth()->user();
-        return view('profile_edit', ['isEdit' => true, 'user' => Auth::user()]);
+        $user = Auth::user();
+        return view('profile_edit', compact('user'));
     }
 
     public function update(Request $request)
@@ -56,8 +56,8 @@ class ProfileController extends Controller
 
         // 画像がある場合は保存
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('public/profile_images');
-            $user->profile_image = basename($path); // ファイル名だけ保存
+            $path = $request->file('image')->store('profile_images', 'public');
+            $user->profile_image = $path;
         }
 
         $user->postcode = $request->postcode;
@@ -97,4 +97,13 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.edit')->with('success', '住所を更新しました');
     }
+
+    public function purchases()
+    {
+        $user = auth()->user();
+        $purchases = $user->purchases()->with('product')->get();
+
+        return view('purchase', compact('purchases'));
+    }
+
 }

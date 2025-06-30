@@ -4,23 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Purchase;
+
 
 class PurchaseController extends Controller
 {
     public function show($product_id)
     {
-        $product = product::findOrFail($product_id);
+
+        $product = Product::findOrFail($product_id);
         $user = auth()->user();
 
         return view('purchase', compact('product', 'user'));
     }
 
-    public function complete(Request $request)
+    public function store(Request $request)
     {
+        $productId = $request->input('product_id');
+        $product = Product::findOrFail($productId);
+        $user = auth()->user();
 
-        $product_id = $request->input('product_id');
-        $item = product::findOrFail($product_id);
+        Purchase::create([
+            'user_id' => auth()->id(),
+            'product_id' => $request->input('product_id'),
+            'total_price' => $product->price,
+        ]);
 
-        return redirect()->route('products.index')->with('success', '購入が完了しました！');
+        return redirect()->route('purchases')->with('success', '購入が完了しました！');
     }
 }

@@ -78,3 +78,11 @@ body {
 .update-btn:hover {
     background-color: #e44444;
 }
+
+.profile-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    /* or cover */
+}

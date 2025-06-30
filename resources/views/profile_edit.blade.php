@@ -11,20 +11,13 @@
 
     <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="profile-form">
         @csrf
-        @method('POST')
-
+        <input type="file" id="image" name="image" hidden>
         <div class="image-upload">
-            <img src="{{ asset('images/default-profile.png') }}" alt="プロフィール画像" class="profile-img">
-            <label class="image-select-btn">
+            <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/default-profile.png') }}" class="profile-img">
+            <label for="image" class="image-select-btn">
                 画像を選択する
-                <input type="file" name="image" hidden>
             </label>
         </div>
-
-        {{-- プレビュー表示（ログインユーザーの画像） --}}
-        @if (Auth::user()->profile_image)
-        <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="プロフィール画像" style="width: 150px;">
-        @endif
 
         <div class="form-group">
             <label for="name">ユーザー名</label>

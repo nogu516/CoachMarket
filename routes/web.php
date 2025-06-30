@@ -43,7 +43,7 @@ Route::delete('/items/{id}', [ItemController::class, 'destroy']);
 
 Route::get('/purchase/{product_id}', [PurchaseController::class, 'show'])->name('purchase.show');
 Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.store');
-Route::post('/purchase/complete', [PurchaseController::class, 'complete'])->name('purchase.complete');
+//Route::post('/purchase/complete', [PurchaseController::class, 'complete'])->name('purchase.complete');
 
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 
@@ -61,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
     })->name('sell');
 
     Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
+
+    Route::get('/mypage/purchases', [ProfileController::class, 'purchases'])->name('purchases');
 
     Route::get('/profile/setup', [ProfileController::class, 'showSetupForm'])->name('profile.setup');
     Route::post('/profile/setup', [ProfileController::class, 'storeSetup'])->name('profile.store');
@@ -98,3 +100,5 @@ Route::get('/address/edit', [ProfileController::class, 'editAddress'])->name('ad
 Route::post('/address/update', [ProfileController::class, 'updateAddress'])->name('address.update');
 
 Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
+
+Route::get('/search', [ProductController::class, 'search'])->name('search');
