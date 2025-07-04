@@ -1,9 +1,10 @@
 .sell-container {
     max-width: 700px;
-    margin: 60px auto;
+    margin: 0 auto;
     padding: 40px;
-    background-color: white;
+    overflow-x: hidden;
     font-family: "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -125,14 +126,16 @@ input[name="category"] {
 
 label {
     display: block;
-    font-size: 14px;
     margin-bottom: 8px;
     color: #333;
 }
 
-input[type="text"],
-textarea,
-select {
+.sell-container label {
+    font-size: 14px; }
+
+        .sell-container input[type="text"],
+        .sell-container textarea,
+        .sell-container select {
     width: 100%;
     padding: 10px;
     font-size: 14px;

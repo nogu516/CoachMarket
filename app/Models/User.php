@@ -58,11 +58,6 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);
     }
 
-    public function purchases()
-    {
-        return $this->hasMany(\App\Models\Purchase::class);
-    }
-
     public function likedProducts()
     {
         return $this->belongsToMany(Product::class, 'likes')->withTimestamps();

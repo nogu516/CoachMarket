@@ -76,7 +76,7 @@
 
                 <form action="{{ route('comments.store') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="item_id" value="{{ $product->id }}">
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <textarea name="body" placeholder="商品へのコメント" required></textarea>
                     <button type="submit" class="comment-btn">コメントを送信する</button>
                 </form>

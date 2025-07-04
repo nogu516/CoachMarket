@@ -51,7 +51,6 @@
         <p>&copy; {{ date('Y') }} Coach Market</p>
     </footer>
 
-    {{-- 各ページごとのスクリプト --}}
     @yield('scripts')
 </body>
 

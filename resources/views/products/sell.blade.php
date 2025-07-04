@@ -7,7 +7,6 @@
 @section('content')
 <div class="sell-container">
     <h1>商品の出品</h1>
-
     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
@@ -81,13 +80,11 @@
             <label for="price">販売価格</label>
             <input type="text" name="price" id="price" placeholder="¥">
         </div>
-</div>
-
-{{-- 出品ボタン --}}
-<div class="form-group">
-    <button type="submit" class="submit-button">出品する</button>
-</div>
-</form>
+        {{-- 出品ボタン --}}
+        <div class="form-group">
+            <button type="submit" class="submit-button">出品する</button>
+        </div>
+    </form>
 </div>
 @endsection
 

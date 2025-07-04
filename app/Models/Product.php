@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -24,11 +24,6 @@ class Product extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function purchases()
-    {
-        return $this->hasMany(Purchase::class);
     }
 
     public function isSold(): Attribute
@@ -55,5 +50,14 @@ class Product extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(\App\Models\Purchase::class);
+    }
+    public function isPurchasedByAuthUser(): bool
+    {
+        return $this->purchases->contains('user_id', Auth::id());
     }
 }

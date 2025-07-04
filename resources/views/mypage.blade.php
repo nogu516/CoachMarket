@@ -5,15 +5,14 @@
 @endsection
 
 @section('content')
-
 <div class="mypage-container">
     <div class="profile-header">
         <div class="profile-image">
-        @if(Auth::user()->profile_image)
-        <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="プロフィール画像" style="width: 80px; height: 80px; border-radius: 50%;">
-    @else
-        <img src="{{ asset('images/default-profile.png') }}" alt="デフォルト画像" style="width: 80px; height: 80px; border-radius: 50%;">
-    @endif
+            @if(Auth::user()->profile_image)
+            <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="プロフィール画像" style="width: 80px; height: 80px; border-radius: 50%;">
+            @else
+            <img src="{{ asset('images/default-profile.png') }}" alt="デフォルト画像" style="width: 80px; height: 80px; border-radius: 50%;">
+            @endif
         </div>
         @auth
         <p>{{ Auth::user()->name }}さん</p>
@@ -28,7 +27,7 @@
     </div>
 
     {{-- 出品した商品 --}}
-    <div id="listed" class="product-section active">
+    <div id="listed" class="product-section {{ $tab === 'listed' ? 'active' : '' }}">
         <div class="product-list">
             @forelse ($listedProducts as $product)
             <div class="product-item">
@@ -42,26 +41,25 @@
             @endforelse
         </div>
     </div>
-</div>
-{{-- 購入した商品 --}}
-<div id="purchased" class="product-section">
-    <div class="product-list">
-        @forelse ($purchasedProducts as $product)
-        <div class="product-item">
-        <a href="{{ route('products.show', $product->id) }}" class="product-card">
-            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
-            <h3 class="product-name">{{ $product->name }}</h3>
-            </a>
+    {{-- 購入した商品 --}}
+    <div id="purchased" class="product-section {{ $tab === 'purchased' ? 'active' : '' }}">
+        <div class="product-list">
+            @forelse ($purchasedProducts as $product)
+            <div class="product-item">
+                <a href="{{ route('products.show', $product->id) }}" class="product-card">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
+                    <h3 class="product-name">{{ $product->name }}</h3>
+                </a>
+            </div>
+            @empty
+            <p>購入した商品はありません。</p>
+            @endforelse
         </div>
-        @empty
-        <p>購入した商品はありません。</p>
-        @endforelse
     </div>
 </div>
 @endsection
 
 @section('scripts')
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const tabs = document.querySelectorAll('.tab');
@@ -74,8 +72,8 @@
                 tab.classList.add('active');
 
                 // 対応するセクションの表示切り替え
-                const targetId = tab.getAttribute('data-target');
                 sections.forEach(sec => sec.classList.remove('active'));
+                const targetId = tab.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');
             });
         });

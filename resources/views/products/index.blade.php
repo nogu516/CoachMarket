@@ -10,9 +10,7 @@
 <div class="product-page">
     <div class="tab-menu" role="tablist">
         <button class="tab active" data-tab="recommend" tabindex="0">おすすめ</button>
-        @if ($mylistProducts->isNotEmpty())
         <button class="tab" data-tab="mylist" tabindex="0">マイリスト</button>
-        @endif
     </div>
 
     {{-- タブ：おすすめ --}}
@@ -21,9 +19,6 @@
         <div class="item-card border p-3 rounded shadow-sm" style="width: 200px;">
             <img src="{{ asset('storage/' . $item->image) }}" class="fixed-image" alt="{{ $item->name }}" style="width: 200px !important; height: auto; object-fit: cover; display: block;">
             <div>{{ $item->name }}（出品者：{{ $item->user->name }}）</div>
-            @if (!$item->is_sold)
-            <span class="btn btn-sm btn-secondary mt-2 disabled">Sold</span>
-            @endif
         </div>
         @empty
         <p>おすすめの商品はありません。</p>

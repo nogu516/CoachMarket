@@ -28,6 +28,7 @@ use Illuminate\Http\Request;
 Route::get('/', [ProductController::class, 'index'])->name('home'); // 例：一覧表示がトップになる場合
 
 Route::middleware(['web', 'auth'])->group(function () {
+
     Route::get('/profile/setup', [ProfileController::class, 'showSetupForm'])->name('profile.setup');
     Route::post('/profile/setup', [ProfileController::class, 'storeSetup'])->name('profile.store');
 
@@ -35,19 +36,13 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::post('/items', [ItemController::class, 'store'])->name('items.store');
-Route::get('/items', [ItemController::class, 'index'])->name('items.index');
-Route::get('/items/{id}', [ItemController::class, 'show'])->name('items.show');
-Route::put('/items/{id}', [ItemController::class, 'update']);
-Route::delete('/items/{id}', [ItemController::class, 'destroy']);
-
 Route::get('/purchase/{product_id}', [PurchaseController::class, 'show'])->name('purchase.show');
 Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.store');
-//Route::post('/purchase/complete', [PurchaseController::class, 'complete'])->name('purchase.complete');
 
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 
 Route::middleware(['auth'])->group(function () {
+
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 
     Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
@@ -63,9 +58,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
 
     Route::get('/mypage/purchases', [ProfileController::class, 'purchases'])->name('purchases');
-
-    Route::get('/profile/setup', [ProfileController::class, 'showSetupForm'])->name('profile.setup');
-    Route::post('/profile/setup', [ProfileController::class, 'storeSetup'])->name('profile.store');
 
     Route::post('/products/{product}/like', [LikeController::class, 'toggle'])->name('products.like');
 });

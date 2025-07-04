@@ -22,7 +22,7 @@ class ItemController extends Controller
             ? auth()->user()->likedProducts()->get()
             : collect();
 
-        return view('products.index', compact('items', 'recommendedProducts', 'mylistProducts'));
+        return redirect()->route('products.index', ['tab' => 'mylist']);
     }
 
     // 商品詳細用のshowメソッド

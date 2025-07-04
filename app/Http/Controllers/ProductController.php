@@ -33,9 +33,8 @@ class ProductController extends Controller
             ? auth()->user()->likedProducts->pluck('id')->toArray()
             : [];
 
-        return view('products.index', compact('products', 'recommendedProducts', 'mylistProducts' , 'likedProductIds'));
+        return view('products.index', compact('products', 'recommendedProducts', 'mylistProducts', 'likedProductIds'));
     }
-
 
     /**
      * 商品詳細画面を表示
