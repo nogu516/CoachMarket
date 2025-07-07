@@ -1,4 +1,3 @@
-<!-- resources/views/profile_edit.blade.php -->
 @extends('layouts.app')
 
 @section('styles')
@@ -22,21 +21,37 @@
         <div class="form-group">
             <label for="name">ユーザー名</label>
             <input type="text" id="name" name="name" value="{{ old('name', $user->name ?? '') }}">
+            @error('name')
+            <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+
         </div>
 
         <div class="form-group">
             <label for="postcode">郵便番号</label>
             <input type="text" id="postcode" name="postcode" value="{{ old('postcode', $user->postcode) }}">
+            @error('postcode')
+            <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+
         </div>
 
         <div class="form-group">
             <label for="address">住所</label>
             <input type="text" id="address" name="address" value="{{ old('address', $user->address) }}">
+            @error('address')
+            <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+
         </div>
 
         <div class="form-group">
             <label for="building">建物名</label>
             <input type="text" id="building" name="building" value="{{ old('building', $user->building) }}">
+            @error('building')
+            <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
+
         </div>
 
         <button type="submit" class="update-btn">更新する</button>

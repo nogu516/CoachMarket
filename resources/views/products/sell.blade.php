@@ -47,7 +47,6 @@
                 @endforeach
             </div>
 
-            {{-- 1つだけの hidden input（← foreach の外） --}}
             <input type="hidden" name="category_id" id="selected-category" value="">
         </div>
         <div class="form-group">
@@ -95,9 +94,9 @@
 
     tags.forEach(tag => {
         tag.addEventListener('click', () => {
-            tags.forEach(t => t.classList.remove('selected')); // 全タグの選択を解除
-            tag.classList.add('selected'); // 選択されたタグだけハイライト
-            hiddenInput.value = tag.dataset.id; // hidden input に値をセット
+            tags.forEach(t => t.classList.remove('selected'));
+            tag.classList.add('selected');
+            hiddenInput.value = tag.dataset.id;
         });
     });
     document.addEventListener('DOMContentLoaded', function() {
@@ -106,18 +105,14 @@
 
         tags.forEach(tag => {
             tag.addEventListener('click', function() {
-                // 全タグから選択スタイル削除
                 tags.forEach(t => t.classList.remove('selected'));
-                // 今クリックされたタグだけ選択状態に
                 tag.classList.add('selected');
-                // data-id を hidden input にセット
                 hiddenInput.value = tag.dataset.id;
-                console.log('選択したカテゴリーID:', hiddenInput.value); // デバッグ用
+                console.log('選択したカテゴリーID:', hiddenInput.value);
             });
         });
     });
 
-    // 画像プレビュー処理（そのままでOK）
     document.getElementById('image').addEventListener('change', function(event) {
         const file = event.target.files[0];
         const preview = document.getElementById('imagePreview');

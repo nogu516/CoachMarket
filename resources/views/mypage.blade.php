@@ -67,11 +67,9 @@
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                // ボタンの active クラス切り替え
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
-                // 対応するセクションの表示切り替え
                 sections.forEach(sec => sec.classList.remove('active'));
                 const targetId = tab.getAttribute('data-target');
                 document.getElementById(targetId).classList.add('active');

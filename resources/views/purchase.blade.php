@@ -28,8 +28,6 @@
                     </select>
                 </div>
 
-                <hr>
-
                 <div class="address-box">
                     <div class="address-header">
                         <span>配送先</span>
@@ -64,10 +62,9 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const select = document.getElementById('payment'); // ← 修正箇所！IDは「payment」
+        const select = document.getElementById('payment');
         const display = document.getElementById('selected-payment');
 
-        // 表示用テキスト対応表
         const paymentLabels = {
             credit: 'クレジットカード',
             convenience: 'コンビニ払い'
@@ -83,7 +80,7 @@
         }
 
         select.addEventListener('change', updateDisplay);
-        updateDisplay(); // 初期表示
+        updateDisplay();
     });
 </script>
 @endsection

@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
-use App\Models\Category;
 
 class ItemController extends Controller
 {
@@ -24,19 +21,4 @@ class ItemController extends Controller
 
         return redirect()->route('products.index', ['tab' => 'mylist']);
     }
-
-    // 商品詳細用のshowメソッド
-    public function show($id)
-    {
-        $item = Item::with(['comments.user', 'category'])->findOrFail($id);
-        $user = auth()->user();
-        return view('products.show', ['product' => $item]);
-    }
-
-    public function create()
-    {
-        $categories = Category::all(); // 全カテゴリを取得
-        return view('items.create', compact('categories'));
-    }
-
 }

@@ -1,18 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -25,21 +22,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', [ProductController::class, 'index'])->name('home'); // 例：一覧表示がトップになる場合
+Route::get('/', [ProductController::class, 'index'])->name('home');
 
 Route::middleware(['web', 'auth'])->group(function () {
-
-    Route::get('/profile/setup', [ProfileController::class, 'showSetupForm'])->name('profile.setup');
-    Route::post('/profile/setup', [ProfileController::class, 'storeSetup'])->name('profile.store');
-
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::get('/purchase/{product_id}', [PurchaseController::class, 'show'])->name('purchase.show');
-Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.store');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
-Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+Route::post('/products/{product}/purchase', [ProductController::class, 'purchase'])->name('products.purchase');
+
+Route::get('/purchase/{product_id}', [PurchaseController::class, 'show'])->name('purchase.show');
+
+Route::post('/purchase', [PurchaseController::class, 'store'])->name('purchase.store');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -52,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 
     Route::get('/sell', function () {
-        return view('sell'); // 出品ページ
+        return view('sell');
     })->name('sell');
 
     Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
@@ -62,19 +60,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/products/{product}/like', [LikeController::class, 'toggle'])->name('products.like');
 });
 
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/recommended', [ProductController::class, 'recommended'])->name('products.recommended');
-Route::get('/products/favorites', [ProductController::class, 'favorites'])->name('products.favorites');
-Route::post('/products/{product}/purchase', [ProductController::class, 'purchase'])->name('products.purchase');
-Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
-
-// ログインフォーム表示
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-
-// ユーザー登録フォーム表示
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');

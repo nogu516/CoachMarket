@@ -1,4 +1,3 @@
-<!-- resources/views/layouts/app.blade.php -->
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -17,7 +16,6 @@
             <div class="logo">
                 <a href="{{ route('products.index') }}">
                     <img src="{{ asset('storage/images/coachtech-logo.svg') }}" alt="画像" style="height: 30px;">
-                    {{-- 上記はデザイン済みロゴの画像URLに置き換えてください --}}
                 </a>
             </div>
             <form action="{{ route('search') }}" method="GET">

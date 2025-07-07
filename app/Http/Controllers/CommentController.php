@@ -17,10 +17,11 @@ class CommentController extends Controller
 
         $comment = new Comment();
         $comment->product_id = $request->product_id;
-        $comment->user_id = auth::id();
-        $comment->content = $request->body;
+        $comment->user_id = auth()->id();
+        $comment->content = $request->content;
         $comment->save();
 
-        return back()->with('success', 'コメントを投稿しました。');
+        return redirect()->route('products.show', $request->product_id)
+        ->with('success', 'コメントを投稿しました。');
     }
 }

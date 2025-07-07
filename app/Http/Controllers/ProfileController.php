@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Profile;
 
 class ProfileController extends Controller
 {
@@ -42,19 +39,17 @@ class ProfileController extends Controller
         $user = Auth::user();
         $user->name = $request->name;
 
-        // バリデーション
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            //'email' => 'required|email|max:255',
-            'bio' => 'nullable|string|max:500',
+            'postcode' => ['required', 'regex:/^\d{3}-\d{4}$/'],
+            'address' => ['required', 'string',     'max:255'],
+            'building' => ['nullable', 'string','max:255'],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $user->name = $request->name;
-        //$user->email = $request->email;
         $user->bio = $request->bio;
 
-        // 画像がある場合は保存
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('profile_images', 'public');
             $user->profile_image = $path;

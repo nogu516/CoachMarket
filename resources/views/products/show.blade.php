@@ -76,8 +76,18 @@
 
                 <form action="{{ route('comments.store') }}" method="POST">
                     @csrf
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <textarea name="body" placeholder="商品へのコメント" required></textarea>
+                    <textarea name="content" placeholder="商品へのコメント" required>{{ old('content') }}</textarea>
                     <button type="submit" class="comment-btn">コメントを送信する</button>
                 </form>
             </div>

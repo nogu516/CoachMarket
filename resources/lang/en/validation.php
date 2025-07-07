@@ -2,6 +2,19 @@
 
 return [
 
+    'required' => ':attribute は必須項目です。',
+    'email' => ':attribute は有効なメールアドレス形式で入力してください。',
+    'min' => [
+        'string' => ':attribute は :min 文字以上で入力してください。',
+    ],
+    'confirmed' => ':attribute と確認用が一致しません。',
+    'attributes' => [
+        'email' => 'メールアドレス',
+        'password' => 'パスワード',
+        'name' => '名前',
+    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | Validation Language Lines

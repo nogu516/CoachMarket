@@ -27,7 +27,6 @@ class PurchaseController extends Controller
         ]);
 
         $productId = $request->input('product_id');
-        // $product = Product::findOrFail($productId);
         $product = Product::findOrFail($request->input('product_id'));
         $user = auth()->user();
 

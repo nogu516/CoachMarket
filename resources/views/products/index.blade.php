@@ -51,17 +51,14 @@
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                // タブ切替
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
-                // コンテンツ表示切替
                 const targetId = tab.getAttribute('data-tab');
                 contents.forEach(c => c.classList.remove('active'));
                 document.getElementById(targetId).classList.add('active');
             });
 
-            // タブキー対応（Enterで選択）
             tab.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     tab.click();

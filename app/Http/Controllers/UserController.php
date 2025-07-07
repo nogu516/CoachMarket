@@ -33,18 +33,16 @@ class UserController extends Controller
         $tab = $request->query('tab', 'listed');
         $user = Auth::user();
 
-        // 出品商品
         $listedProducts = Product::where('user_id', $user->id)->get();
 
-        // 例: MyPageController など
         $purchasedProducts = Purchase::with('product.purchases')
             ->where('user_id', auth()->id())
             ->get()
             ->pluck('product');
 
-        // 購入商品（Purchase モデルと Product モデルがリレーションしている場合）
-        // $purchasedProducts = Product::whereHas('purchases', function ($query) use ($user) {
-        // $query->where('user_id', $user->id);})->get();
+        $user = Auth::user()->load('address');
+
+        $purchases = $user->purchases()->with('product')->get();
 
         return view('mypage', compact('listedProducts', 'purchasedProducts', 'tab' ));
     }
